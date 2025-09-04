@@ -58,8 +58,16 @@ void setup() {
 }
 
 void loop() {
-  // espera 5 seg, conforme regras
-  delay(5000);
+  // espera 5 seg, piscando o LED
+  for (int i = 0; i < 5; i++) {
+    digitalWrite(A0, HIGH);
+    delay(500);
+    digitalWrite(A0, LOW);
+    delay(500);
+  }
+
+  //deixa o LED ligado
+  digitalWrite(A0, HIGH);
 }
 
 // put function definitions here:
