@@ -1,18 +1,14 @@
 #include <Arduino.h>
 
 #include "../include/motores.h"
+#include "../include/ultra.h"
+#include "../include/infra.h"
 
 // declaração pinos ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // infravermelhos
 const char infra0 = 2;
 const char infra1 = 7;
-
-// ultrassons 
-struct ultra {
-  char echo;
-  char trig;
-};
 
 const ultra ultra0 = {.echo = 3, .trig = 4};
 const ultra ultra1 = {.echo = 8, .trig = 9};
