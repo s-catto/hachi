@@ -18,7 +18,8 @@ const motor motorR = {.pwm = 6, .h0 = 12, .h1 = 13};
 
 // declaração funções auxiliares +++++++++++++++++++++++++++++++++++++++
 
-
+// procura oponente
+void procura();
 
 // funções principais +++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -38,11 +39,10 @@ void setup() {
 
   // motores
   pinMode(motorL.pwm, OUTPUT);
-  pinMode(motorR.pwm, OUTPUT);
-
-  // ponte H
   pinMode(motorL.h0, OUTPUT);
   pinMode(motorL.h1, OUTPUT);
+
+  pinMode(motorR.pwm, OUTPUT);
   pinMode(motorR.h0, OUTPUT);
   pinMode(motorR.h1, OUTPUT);
 }
@@ -58,6 +58,19 @@ void loop() {
 
   //deixa o LED ligado
   digitalWrite(A0, HIGH);
+
+  procura();
+
 }
 
 // funções auxiliares ++++++++++++++++++++++++++++++++++++++++++++++++
+
+void procura() {
+  frente(motorL, motorR);
+  delay(300);
+  esquerda(motorL, motorR);
+  delay(300);
+
+  // estratégia 2:
+  // esquerda(motorL, motorR);
+}
