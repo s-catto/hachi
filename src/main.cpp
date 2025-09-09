@@ -1,8 +1,8 @@
 #include <Arduino.h>
 
+#include "../include/motores.h"
 
-// put function declarations here:
-int frente();
+// declaração pinos ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // infravermelhos
 const char infra0 = 2;
@@ -17,15 +17,14 @@ struct ultra {
 const ultra ultra0 = {.echo = 3, .trig = 4};
 const ultra ultra1 = {.echo = 8, .trig = 9};
 
-// motores
-struct motor {
-  char pwm;
-  char h0;
-  char h1;
-};
-
 const motor motorL = {.pwm = 5, .h0 = 11, .h1 = 10};
 const motor motorR = {.pwm = 6, .h0 = 12, .h1 = 13};
+
+// declaração funções auxiliares +++++++++++++++++++++++++++++++++++++++
+
+
+
+// funções principais +++++++++++++++++++++++++++++++++++++++++++++++++++
 
 void setup() {
   // LED
@@ -65,7 +64,4 @@ void loop() {
   digitalWrite(A0, HIGH);
 }
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
+// funções auxiliares ++++++++++++++++++++++++++++++++++++++++++++++++
