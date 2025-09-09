@@ -2,35 +2,30 @@
 
 
 // put function declarations here:
-int myFunction(int, int);
-
-// A0 - led
-// 10 a 13 - ponte h
-// 9 e 8 - 1 sensor ultrassônico 
-// 7 - 1 sensor infravermelho 
-// 6 e 5 - pwm do motor 
-// 4 e 3 - 1 sensor ultrassônico 
-// 2 - 1 sensor infravermelho
+int frente();
 
 // infravermelhos
 const char infra0 = 2;
 const char infra1 = 7;
 
 // ultrassons 
-const char echo0 = 3;
-const char trig0 = 4;
-const char echo1 = 8;
-const char trig1 = 9;
+struct ultra {
+  char echo;
+  char trig;
+};
 
-// pwm motores
-const char pwmL = 5;
-const char pwmR = 6;
+const ultra ultra0 = {.echo = 3, .trig = 4};
+const ultra ultra1 = {.echo = 8, .trig = 9};
 
-// ponte H
-const char hL0 = 11;
-const char hL1 = 10;
-const char hR0 = 12;
-const char hR1 = 13;
+// motores
+struct motor {
+  char pwm;
+  char h0;
+  char h1;
+};
+
+const motor motorL = {.pwm = 5, .h0 = 11, .h1 = 10};
+const motor motorR = {.pwm = 6, .h0 = 12, .h1 = 13};
 
 void setup() {
   // LED
@@ -41,20 +36,20 @@ void setup() {
   pinMode(infra1, INPUT);
 
   // ultrassom
-  pinMode(echo0, INPUT);
-  pinMode(trig0, OUTPUT);
-  pinMode(echo1, INPUT);
-  pinMode(trig1, OUTPUT);
+  pinMode(ultra0.echo, INPUT);
+  pinMode(ultra0.trig, OUTPUT);
+  pinMode(ultra1.echo, INPUT);
+  pinMode(ultra1.trig, OUTPUT);
 
-  // pwm motores
-  pinMode(pwmL, OUTPUT);
-  pinMode(pwmR, OUTPUT);
+  // motores
+  pinMode(motorL.pwm, OUTPUT);
+  pinMode(motorR.pwm, OUTPUT);
 
   // ponte H
-  pinMode(hL0, OUTPUT);
-  pinMode(hL1, OUTPUT);
-  pinMode(hR0, OUTPUT);
-  pinMode(hR1, OUTPUT);
+  pinMode(motorL.h0, OUTPUT);
+  pinMode(motorL.h1, OUTPUT);
+  pinMode(motorR.h0, OUTPUT);
+  pinMode(motorR.h1, OUTPUT);
 }
 
 void loop() {
