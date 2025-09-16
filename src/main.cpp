@@ -9,8 +9,8 @@
 #define LED A1
 
 // infravermelhos
-const char infraL = 2;
-const char infraR = 7;
+#define infraL A2
+#define infraR A3
 
 const ultra ultraL = {.echo = 3, .trig = 4};
 const ultra ultraR = {.echo = 8, .trig = 9};
@@ -47,6 +47,8 @@ void setup() {
   pinMode(motorR.pwm, OUTPUT);
   pinMode(motorR.h0, OUTPUT);
   pinMode(motorR.h1, OUTPUT);
+
+  freio(motorL, motorR);
 
   // espera 5 seg, piscando o LED
   for (int i = 0; i < 5; i++) {
