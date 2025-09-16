@@ -8,10 +8,12 @@ H H freio
 To do:
 [X] fazer LED piscar e ficar ligado
 [X] fazer estratégia de procura 
-[] makefile
-[] setar pwm do motor
-[] criar funções p/ interpretar saídas dos sensores 
-[] fazer estratégia de combate
+[X] setar pwm do motor
+[X] criar funções p/ interpretar saídas dos sensores 
+[X] fazer estratégia de combate
+
+[] calibrar saida analogica do infra
+[] checar L/R dos sensores
 
 Lembretes:
 *** para definir sensibilidade dos sensores levar em conta a vida real lol

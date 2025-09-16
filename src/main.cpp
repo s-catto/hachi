@@ -6,12 +6,14 @@
 
 // declaração pinos ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-// infravermelhos
-const char infra0 = 2;
-const char infra1 = 7;
+#define LED A1
 
-const ultra ultra0 = {.echo = 3, .trig = 4};
-const ultra ultra1 = {.echo = 8, .trig = 9};
+// infravermelhos
+const char infraL = 2;
+const char infraR = 7;
+
+const ultra ultraL = {.echo = 3, .trig = 4};
+const ultra ultraR = {.echo = 8, .trig = 9};
 
 const motor motorL = {.pwm = 5, .h0 = 11, .h1 = 10};
 const motor motorR = {.pwm = 6, .h0 = 12, .h1 = 13};
@@ -25,17 +27,17 @@ void procura();
 
 void setup() {
   // LED
-  pinMode(A0, OUTPUT);
+  pinMode(LED, OUTPUT);
 
   // infravermelho
-  pinMode(infra0, INPUT);
-  pinMode(infra1, INPUT);
+  pinMode(infraL, INPUT);
+  pinMode(infraR, INPUT);
 
   // ultrassom
-  pinMode(ultra0.echo, INPUT);
-  pinMode(ultra0.trig, OUTPUT);
-  pinMode(ultra1.echo, INPUT);
-  pinMode(ultra1.trig, OUTPUT);
+  pinMode(ultraL.echo, INPUT);
+  pinMode(ultraL.trig, OUTPUT);
+  pinMode(ultraR.echo, INPUT);
+  pinMode(ultraR.trig, OUTPUT);
 
   // motores
   pinMode(motorL.pwm, OUTPUT);
@@ -45,24 +47,54 @@ void setup() {
   pinMode(motorR.pwm, OUTPUT);
   pinMode(motorR.h0, OUTPUT);
   pinMode(motorR.h1, OUTPUT);
-}
 
-void loop() {
   // espera 5 seg, piscando o LED
   for (int i = 0; i < 5; i++) {
-    digitalWrite(A0, HIGH);
+    digitalWrite(LED, HIGH);
     delay(500);
-    digitalWrite(A0, LOW);
+    digitalWrite(LED, LOW);
     delay(500);
   }
 
   //deixa o LED ligado
-  digitalWrite(A0, HIGH);
+  digitalWrite(LED, HIGH);
 
-  procura();
-
+  analogWrite(motorL.pwm, 255);
+  analogWrite(motorR.pwm, 255);
 }
 
+void loop() {
+
+  // se não encontra linha
+  if ((!linha(infraL) && !linha(infraR))){
+
+    // se encontra oponente
+    if (encontra(ultraL, ultraR)) {
+      while (!(linha(infraL) || linha(infraR))) 
+        frente(motorL, motorR);
+      
+      re(motorL, motorR);
+      delay(300);
+    
+    // se nao encontra oponente
+    } else
+      procura();
+
+  // se encontra linha na esquerda
+  } else if (linha(infraL)) { 
+    direita(motorL, motorR);
+    delay(300);
+    frente(motorL, motorR);
+    delay(300);
+
+  // se encontra linha na direita
+  } else if (linha(infraR)) {
+    esquerda(motorL, motorR);
+    delay(300);
+    frente(motorL, motorR);
+    delay(300);
+  } 
+}
 // funções auxiliares ++++++++++++++++++++++++++++++++++++++++++++++++
 
 void procura() {
