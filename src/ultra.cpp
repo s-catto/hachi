@@ -1,14 +1,15 @@
 #include <Arduino.h>
+#include <Ultrasonic.h>
 #include "../include/ultra.h"
 
-char encontra(ultra ultraL, ultra ultraR) {
+char encontra(ultra ultraL, Ultrasonic ultrasonicL, ultra ultraR, Ultrasonic ultrasonicR) {
     float tempo, distL, distR;
 
     // manda sinal por 10 microsseg
     digitalWrite(ultraL.trig, LOW);  
-	delayMicroseconds(2);  
+	delay(2);  
 	digitalWrite(ultraL.trig, HIGH);  
-	delayMicroseconds(10);  
+	delay(10);  
 	digitalWrite(ultraL.trig, LOW);
 
     // recebe tempo que demorou p/ receber sinal
@@ -18,9 +19,9 @@ char encontra(ultra ultraL, ultra ultraR) {
 
     // manda sinal por 10 microsseg
     digitalWrite(ultraR.trig, LOW);  
-	delayMicroseconds(2);  
+	delay(2);  
 	digitalWrite(ultraR.trig, HIGH);  
-	delayMicroseconds(10);  
+	delay(10);  
 	digitalWrite(ultraR.trig, LOW);
 
     // recebe tempo que demorou p/ receber sinal
@@ -28,11 +29,17 @@ char encontra(ultra ultraL, ultra ultraR) {
 
     distR = (tempo * 0.343) / 2; // calcula distância
 
-    if ((distL > distancia) && (distR > distancia)) {
+    distL = ultrasonicL.read();
+    distR = ultrasonicR.read();
+
+    Serial.print(distL);
+    Serial.print(distR);
+
+    if ((distL < distancia) && (distR < distancia)) {
         return 3;
-    } else if ((distR > distancia)) {
+    } else if ((distR < distancia)) {
         return 2;
-    } else if ((distL > distancia)) {
+    } else if ((distL < distancia)) {
         return 1;
     } else {
         return 0;

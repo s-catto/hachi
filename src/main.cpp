@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <Ultrasonic.h>
 
 #include "../include/motores.h"
 #include "../include/ultra.h"
@@ -14,6 +15,9 @@
 
 const ultra ultraL = {.echo = 3, .trig = 4};
 const ultra ultraR = {.echo = 8, .trig = 9};
+
+Ultrasonic ultrasonicL(ultraL.trig, ultraL.echo);
+Ultrasonic ultrasonicR(ultraR.trig, ultraR.echo);
 
 const motor motorL = {.pwm = 5, .h0 = 11, .h1 = 10};
 const motor motorR = {.pwm = 6, .h0 = 12, .h1 = 13};
@@ -48,6 +52,8 @@ void setup() {
   pinMode(motorR.h0, OUTPUT);
   pinMode(motorR.h1, OUTPUT);
 
+  Serial.begin(9600);
+
   freio(motorL, motorR);
 
   // espera 5 seg, piscando o LED
@@ -61,8 +67,8 @@ void setup() {
   //deixa o LED ligado
   digitalWrite(LED, HIGH);
 
-  analogWrite(motorL.pwm, 255);
-  analogWrite(motorR.pwm, 255);
+  analogWrite(motorL.pwm, 50);
+  analogWrite(motorR.pwm, 50);
 }
 
 void loop() {
@@ -71,7 +77,7 @@ void loop() {
   if ((!linha(infraL) && !linha(infraR))){
 
     // se encontra oponente
-    if (encontra(ultraL, ultraR)) {
+    if (encontra(ultraL, ultrasonicL, ultraR, ultrasonicR)) {
       while (!(linha(infraL) || linha(infraR))) 
         frente(motorL, motorR);
       
